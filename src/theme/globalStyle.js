@@ -1,6 +1,8 @@
-import { createGlobalStyle } from 'styled-components';
+import React from 'react'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import theme from './theme'
 
-export const GlobalStyle = createGlobalStyle`
+const Style = createGlobalStyle`
 
     @import url('https://fonts.googleapis.com/css?family=Poiret+One');
     @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -12,22 +14,56 @@ export const GlobalStyle = createGlobalStyle`
     body {
         padding: 0;
         margin: 0;
-        font-family: 'Roboto', sans-serif;
+        font-family: ${props => props.theme.normalFont};
         font-size: 1rem;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: Poiret One,cursive;
+        font-family: ${props => props.theme.titleFont};
         margin: 0;
         padding: 0;
     }
 
     .container {
-        max-width: 1140px;
-        margin: 0 auto;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+      @media (min-width: 768px) {
+        .container {
+          width: 750px;
+        }
+    }
+
+      @media (min-width: 992px) {
+        .container {
+          width: 970px;
+        }
+    }
+
+      @media (min-width: 1200px) {
+        .container {
+          width: 1170px;
+        }
+    }
+
+    .ant-list-item-meta-title {
+        color: #000 !important;
+        margin-bottom: 4px;
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 700;
     }
 `
 
-export const theme = {
-    primary: '#6e27c5'
+const GlobalStyle = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <Style />
+        </ThemeProvider>
+    )
 }
+
+export default GlobalStyle

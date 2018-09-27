@@ -29,18 +29,18 @@ const Header = props => (
     <HeaderWrapper homeView={props.homeView}>
         <div className="container">
             <Row>
-                <Col span={6}>
+                <Col xs={4} sm={6}>
                     <Logo to="/">
                         <LogoImg src={logo} />
                     </Logo>
                 </Col>
-                <Col span={18}>
+                <Col xs={20} sm={18}>
                     <Nav />
                 </Col>
             </Row>
-        </div>
 
-        <Bannar homeView={props.homeView} hero={props.hero} />
+            <Bannar homeView={props.homeView} hero={props.hero} />
+        </div>
     </HeaderWrapper>
 )
 

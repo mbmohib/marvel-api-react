@@ -1,14 +1,29 @@
 import React from 'react';
 import { addHttps } from '../util/util'
-import { Row, Col, Skeleton, Button } from 'antd'
+import { Row, Col, Button, Spin } from 'antd'
 import styled from 'styled-components';
 import Heading from './Heading';
+import media from '../theme/mediaQuery';
 
 const HeroThumbnail = styled.img`
     border: 2px solid #fff;
     border-radius: 5px;
-    max-width: 100%;
+    max-width: 60%;
     height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    display: block;
+
+    ${media.tablet`
+        max-width: 80%;
+        margin-bottom: 0;
+    `}
+
+    ${media.laptop`
+        max-width: 100%;
+        margin-bottom: 0;
+    `}
 `
 
 const HeroSection = styled.section`
@@ -23,14 +38,9 @@ const Paragraph = styled.p`
 
 const BannarDetailsView = (props) => (
     <HeroSection className="container">
-        <Row>
-            <Col span={10}>
-                <Skeleton 
-                    loading={!props.hero} 
-                    paragraph={false} title={false} 
-                    avatar={{ shape: 'square', size: 'large'}}
-                    active>
-
+        <Row gutter={32}>
+            <Spin tip="Loading..." size="large" spinning={!props.hero}>
+                <Col xs={24} sm={8}>
                     {props.hero && (
                         <HeroThumbnail
                             src={`${
@@ -40,15 +50,8 @@ const BannarDetailsView = (props) => (
                             }`}
                         />
                     )}
-                </Skeleton>
-            </Col>
-            <Col span={14}>
-                <Skeleton 
-                    loading={!props.hero} 
-                    title={{ width: '300px'}} 
-                    paragraph={{ rows: 4, width: '500px' }} 
-                    active
-                >
+                </Col>
+                <Col xs={24} sm={16}>
 
                     {props.hero && (
                         <Heading color="#fff">
@@ -65,8 +68,8 @@ const BannarDetailsView = (props) => (
                             Visit Resource
                         </Button>
                     )}
-                </Skeleton>
-            </Col>
+                </Col>
+            </Spin>
         </Row>
     </HeroSection>
 )

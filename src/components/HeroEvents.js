@@ -124,7 +124,7 @@ class HeroEvents extends React.Component {
                 <Row gutter={16}>
                     {
                         this.state.eventDetails.map( (event, index) => (
-                            <Col key={index} span={6}>
+                            <Col key={index} xs={24} sm={12} md={8} lg={6}>
                                 <HeroDetailsItem
                                     handleDrawer={this.props.handleDrawer} 
                                     loading={this.state.loading} 

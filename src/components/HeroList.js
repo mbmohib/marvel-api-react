@@ -28,7 +28,7 @@ class HeroList extends React.Component {
                 <div className="container">
                     <Row gutter={24}>
                         {this.state.data.map( hero => (
-                            <Col key={hero.id} span={6}>
+                            <Col key={hero.id} xs={12} sm={8} md={8} lg={6}>
                                 <Hero hero={hero}/>
                             </Col>
                         ))}

@@ -1,6 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import media from '../theme/mediaQuery';
 
 const NavWrapper = styled.div`
     display: flex;
@@ -14,13 +15,27 @@ const NavItem = styled(NavLink) `
     font-size: 1.2rem;
     text-transform: uppercase;
     font-family: 'Roboto', sans-serif;
-`
+    display: none;
+
+    ${media.tablet`
+        display: block;
+    `}
+`;
+
+const Link = styled.a`
+    padding: 10px;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+`;
 
 const Nav = () => (
     <NavWrapper>
         <NavItem to="/" activeClassName='is-active' exact={true}>Home</NavItem>
-        <NavItem to="" activeClassName='is-active'>Contact Me</NavItem>
-        <NavItem to="" activeClassName='is-active'>Fork this Repo</NavItem>
+        <Link target="_blank" href="https://github.com/mbmohib/marvel-api-react">
+            Fork this Repo
+        </Link>
     </NavWrapper>
 )
 
