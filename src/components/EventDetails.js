@@ -17,7 +17,7 @@ const EventsInfo = styled.div`
     h2 {
         font-size: 1.5rem;
     }
-
+    
     p {
         font-size: 1rem;
     }
@@ -106,7 +106,7 @@ class EventDetails extends React.Component {
                 <Divider>Charecters ({this.state.event && this.state.event.characters.available})</Divider>
 
                 <List
-                    loading={false}
+                    loading={!this.state.event}
                     bordered
                     dataSource={this.state.event && this.state.event.characters.items}
                     renderItem={item => (

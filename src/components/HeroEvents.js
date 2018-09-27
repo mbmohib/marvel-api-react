@@ -22,9 +22,40 @@ class HeroEvents extends React.Component {
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    createPlaceholderData() {
+    componentDidMount() {
+        this.createPlaceholderData(this.props.comics.available, this.state.eventDetails.length);
+        this.getData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.comics.collectionURI !== this.props.comics.collectionURI) {
+            console.log('updated');
+            this.setState(() => {
+                return {
+                    eventDetails: [],
+                    loading: true,
+                    offset: 0,
+                }
+            }, () => {
+                this.createPlaceholderData(this.props.comics.available, this.state.eventDetails.length);
+                this.getData();
+            })
+        };
+    }
+
+    createPlaceholderData(totalAvailable, offset) {
+        let count;
+
+        if (totalAvailable > 8 && offset === 0) {
+            count = 8;
+        } else if (totalAvailable < (offset + 8)) {
+            count = totalAvailable - offset
+        } else {
+            count = 8;
+        }
+
         const arr = [];
-        for(let i =0; i<8; i++) {
+        for(let i =0; i < count; i++) {
             arr.push({
                 title: undefined,
                 img: undefined,
@@ -39,37 +70,16 @@ class HeroEvents extends React.Component {
         })
     }
 
-    componentDidMount() {
-        this.createPlaceholderData();
-        this.getData();
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.comics.collectionURI !== this.props.comics.collectionURI) {
-
-            this.setState(() => {
-                return {
-                    eventDetails: [],
-                    loading: true,
-                    offset: 0,
-                }
-            }, () => {
-                this.createPlaceholderData();
-                this.getData();
-            })
-        };
-    }
-
     handleLoadMore() {
-        this.createPlaceholderData();
-        this.setState(prevState => {
+        this.setState(() => {
             return {
-                offset: prevState.offset + prevState.eventDetails.length,
                 loading: true
             }
+        }, () => {
+            this.createPlaceholderData(this.props.comics.available, this.state.offset);
+            this.getData();
         })
 
-        this.getData();
     }
 
     async getData() {
@@ -89,11 +99,11 @@ class HeroEvents extends React.Component {
             prevState.eventDetails.splice(prevState.eventDetails.length - formatReturnData.length, formatReturnData.length);
             return {
                 eventDetails: prevState.eventDetails.concat(formatReturnData),
-                loading: false
+                loading: false,
+                offset: prevState.eventDetails.length + formatReturnData.length,
             }
         });
     }
-
 
     render() {
         return (
@@ -101,7 +111,7 @@ class HeroEvents extends React.Component {
                 <Divider>
                     <Heading size="2rem">
                         <Skeleton
-                            loading={this.state.loading}
+                            loading={!this.props.comics}
                             paragraph={false}
                             title={{ width: '100px' }}
                         >
@@ -124,8 +134,10 @@ class HeroEvents extends React.Component {
                         ))
                     }
                 </Row>
-
-                <LoadMore type="primary" onClick={this.handleLoadMore}>Load More</LoadMore>
+                {
+                    this.props.comics.available > this.state.eventDetails.length && 
+                    <LoadMore type="primary" onClick={this.handleLoadMore}>Load More</LoadMore>
+                }
             </div>
         )
     }
