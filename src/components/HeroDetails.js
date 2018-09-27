@@ -14,7 +14,7 @@ class HeroDetails extends React.Component {
             showDrawer: false,
             eventDetailsEndpoint: undefined
         }
-        this.handleDrawer = this.handleDrawer.bind(this);
+        this.closeDrawer = this.closeDrawer.bind(this);
         this.showDrawer = this.showDrawer.bind(this);
     }
 
@@ -46,7 +46,6 @@ class HeroDetails extends React.Component {
     }
 
     showDrawer(endpoint) {
-
         this.setState(() => {
             return {
                 eventDetailsEndpoint: endpoint && endpoint,
@@ -55,7 +54,7 @@ class HeroDetails extends React.Component {
         })
     }
 
-    handleDrawer() {
+    closeDrawer() {
         this.setState(() => {
             return {
                 showDrawer: false
@@ -116,7 +115,7 @@ class HeroDetails extends React.Component {
 
                 
                 <EventDetails 
-                    handleDrawer={this.handleDrawer} 
+                    closeDrawer={this.closeDrawer} 
                     visible={this.state.showDrawer}
                     endpoint={this.state.eventDetailsEndpoint}    
                     />

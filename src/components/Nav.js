@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import media from '../theme/mediaQuery';
+import { Icon } from 'antd';
 
 const NavWrapper = styled.div`
     display: flex;
@@ -34,6 +35,7 @@ const Nav = () => (
     <NavWrapper>
         <NavItem to="/" activeClassName='is-active' exact={true}>Home</NavItem>
         <Link target="_blank" href="https://github.com/mbmohib/marvel-api-react">
+            <Icon style={{marginRight: '5px'}} type="github" theme="outlined" />
             Fork this Repo
         </Link>
     </NavWrapper>

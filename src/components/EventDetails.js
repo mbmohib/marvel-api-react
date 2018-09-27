@@ -71,10 +71,10 @@ class EventDetails extends React.Component {
     render() {
         return (
             <Drawer
-                width={640}
+                width={'50%'}
                 placement="right"
                 closable={true}
-                onClose={this.props.handleDrawer}
+                onClose={this.props.closeDrawer}
                 visible={this.props.visible}
             >
                 <Thumbnail 
