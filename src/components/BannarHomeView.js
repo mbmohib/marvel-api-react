@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import Heading from './Heading';
 
 const HeroSection = styled.section`
-    padding-top: 50px;
     padding-bottom: 50px;
-    min-height: 40vh;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 const BannarHomeView = () => (

@@ -71,7 +71,7 @@ class EventDetails extends React.Component {
     render() {
         return (
             <Drawer
-                width={'50%'}
+                width={'70%'}
                 placement="right"
                 closable={true}
                 onClose={this.props.closeDrawer}
@@ -117,7 +117,7 @@ class EventDetails extends React.Component {
                             <Link to={`/hero/${this.state.event && parseInt(item.resourceURI.match(/\d{3,}/).join(''))}`}>
                                 <Button 
                                     type="primary"
-                                    onClick={this.props.handleDrawer}
+                                    onClick={this.props.closeDrawer}
                                     >
                                     View
                                 </Button>
