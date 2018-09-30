@@ -6,8 +6,9 @@ class App extends Component {
     render() {
         return (
             <div>
-                <GlobalStyle />
-                <AppRouter />
+                <GlobalStyle>
+                    <AppRouter />
+                </GlobalStyle>
             </div>
         )
     }

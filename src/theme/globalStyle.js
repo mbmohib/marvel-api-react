@@ -58,10 +58,13 @@ const Style = createGlobalStyle`
     }
 `
 
-const GlobalStyle = () => {
+const GlobalStyle = props => {
     return (
         <ThemeProvider theme={theme}>
-            <Style />
+            <div>
+                <Style />
+                {props.children}
+            </div>
         </ThemeProvider>
     )
 }

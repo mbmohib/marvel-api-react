@@ -23,7 +23,8 @@ class HeroList extends React.Component {
     render() {
         return (
             <div>
-                <Header homeView={true}/>
+                {/* Show Header for home page */}
+                <Header homeView/>
 
                 <div className="container">
                     <Row gutter={24}>

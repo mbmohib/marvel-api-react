@@ -40,53 +40,48 @@ const CardFooter = styled.footer`
     padding: 30px;
 `;
 
-class HeroDetailsItem extends React.Component {
-    render() {
-        return (
-                <Card>
-                    <CardHeader>
-                        <Skeleton 
-                            loading={this.props.loading && !this.props.event.title}
-                            active 
-                            avatar={{shape: 'square'}} 
-                            paragraph={false}
-                            title={{ width: '130px' }}
-                        >
-                            <img src={this.props.event.img ? addHttps(this.props.event.img) : DefaultCover} alt={this.props.event && this.props.event.title}/>
-                            <h2>{this.props.event && this.props.event.title}</h2>
-                        </Skeleton>
-                    </CardHeader>
-    
-                    <CardArticle>
-                        <Skeleton
-                            loading={this.props.loading && !this.props.event.description}
-                            active 
-                            title={false}
-                            paragraph={{ rows: 3}}
-                        >
-                            {this.props.event.description && truncateString(this.props.event.description)}
-                        </Skeleton>
-                    </CardArticle>
-    
-                    <CardFooter>
-                        <Skeleton 
-                            loading={this.props.loading && !this.props.event.url}
-                            active
-                            paragraph={false}
-                            title={{ width: '50px' }}
-                        >
-                            <Button 
-                                onClick={() => this.props.handleDrawer(this.props.event.url)} 
-                                type="dashed"
-                            >
-                                See Details
-                            </Button>
-                        </Skeleton>
-                    </CardFooter>
-                </Card>
-        )
-    }
-    
-};
+const HeroDetailsItem = props =>  (
+    <Card>
+        <CardHeader>
+            <Skeleton 
+                loading={props.loading && !props.event.title}
+                active 
+                avatar={{shape: 'square'}} 
+                paragraph={false}
+                title={{ width: '130px' }}
+            >
+                <img src={props.event.img ? addHttps(props.event.img) : DefaultCover} alt={props.event && props.event.title}/>
+                <h2>{props.event && props.event.title}</h2>
+            </Skeleton>
+        </CardHeader>
+
+        <CardArticle>
+            <Skeleton
+                loading={props.loading && !props.event.description}
+                active 
+                title={false}
+                paragraph={{ rows: 3}}
+            >
+                {props.event.description && truncateString(props.event.description)}
+            </Skeleton>
+        </CardArticle>
+
+        <CardFooter>
+            <Skeleton 
+                loading={props.loading && !props.event.url}
+                active
+                paragraph={false}
+                title={{ width: '50px' }}
+            >
+                <Button 
+                    onClick={() => props.handleDrawer(props.event.url)} 
+                    type="dashed"
+                >
+                    See Details
+                </Button>
+            </Skeleton>
+        </CardFooter>
+    </Card>
+)
 
 export default HeroDetailsItem;

@@ -23,13 +23,14 @@ class HeroEvents extends React.Component {
     }
 
     componentDidMount() {
+        // Create placeholder loading effect while data being fetched
         this.createPlaceholderData(this.props.comics.available, this.state.eventDetails.length);
         this.getData();
     }
-
+ 
     componentDidUpdate(prevProps) {
+        // Set initial state when collection URI changed
         if(prevProps.comics.collectionURI !== this.props.comics.collectionURI) {
-            console.log('updated');
             this.setState(() => {
                 return {
                     eventDetails: [],
@@ -37,6 +38,7 @@ class HeroEvents extends React.Component {
                     offset: 0,
                 }
             }, () => {
+                // Create placeholder loading effect while data being fetched
                 this.createPlaceholderData(this.props.comics.available, this.state.eventDetails.length);
                 this.getData();
             })
@@ -45,15 +47,18 @@ class HeroEvents extends React.Component {
 
     createPlaceholderData(totalAvailable, offset) {
         let count;
-
         if (totalAvailable > 8 && offset === 0) {
+            // Create 8 placeholder Check if total collection greater then 8
+            // and request for first time
             count = 8;
         } else if (totalAvailable < (offset + 8)) {
+            // If the next request will exceed the total
             count = totalAvailable - offset
         } else {
             count = 8;
         }
 
+        // Fake data for placeholder 
         const arr = [];
         for(let i =0; i < count; i++) {
             arr.push({
@@ -96,6 +101,7 @@ class HeroEvents extends React.Component {
         })
 
         this.setState((prevState) => {
+            // Delete fake data
             prevState.eventDetails.splice(prevState.eventDetails.length - formatReturnData.length, formatReturnData.length);
             return {
                 eventDetails: prevState.eventDetails.concat(formatReturnData),

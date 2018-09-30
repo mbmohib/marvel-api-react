@@ -19,6 +19,7 @@ class HeroDetails extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        // Clear all data and re-fetch if id changed
         if (prevProps.match.params.id !== this.props.match.params.id) {
             this.setState(() => {
                 return {
