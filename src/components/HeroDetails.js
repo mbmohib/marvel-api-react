@@ -4,7 +4,7 @@ import HeroEvents from './HeroEvents';
 import fetchData from '../util/fetchData';
 import config from '../config';
 import { addHttps } from '../util/util';
-import EventDetails from './EventDetails';
+import { Alert } from 'antd';
 
 class HeroDetails extends React.Component {
     
@@ -12,15 +12,11 @@ class HeroDetails extends React.Component {
     defaultState = {
         results: null,
         error: null,
-        showDrawer: false,
-        eventDetailsEndpoint: null
     }
 
     constructor(props) {
         super(props);
         this.state = this.defaultState;
-        this.closeDrawer = this.closeDrawer.bind(this);
-        this.showDrawer = this.showDrawer.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -38,35 +34,33 @@ class HeroDetails extends React.Component {
     async getData() {
         // Build URL
         const url = addHttps(config.charactersUrl + '/' + this.props.match.params.id);
-        const returnData = await fetchData(url);
+        
+        try {
+            const returnData = await fetchData(url);
+            // console.log(returnData.data.data.results[0]);
+    
+            this.setState(() => {
+                return {
+                    results: returnData.data.data.results[0]
+                }
+            })
+        } catch(error) {
+            this.setState(() => {
+                return {
+                    error: error
+                }
+            })
+        }
 
-        this.setState(() => {
-            return {
-                results: returnData.data.data.results[0]
-            }
-        })
-    }
-
-    showDrawer(endpoint) {
-        this.setState(() => {
-            return {
-                eventDetailsEndpoint: endpoint && endpoint,
-                showDrawer: true
-            }
-        })
-    }
-
-    closeDrawer() {
-        this.setState(() => {
-            return {
-                showDrawer: false
-            }
-        })
     }
 
     render() {
         return (
             <div>
+                {
+                    this.state.error && 
+                    <Alert message="Warning Text" type="warning" />
+                }
                 <Header homeView={false} hero={this.state.results}/>
 
                 <div className="container">
@@ -77,7 +71,6 @@ class HeroDetails extends React.Component {
                         <HeroEvents
                             title="Comics"
                             comics={this.state.results.comics}
-                            handleDrawer={this.showDrawer}
                         />
                     }
 
@@ -88,7 +81,6 @@ class HeroDetails extends React.Component {
                         <HeroEvents
                             title="Series"
                             comics={this.state.results.series}
-                            handleDrawer={this.showDrawer}
                         />
                     }
 
@@ -99,7 +91,6 @@ class HeroDetails extends React.Component {
                         <HeroEvents
                             title="Events"
                             comics={this.state.results.events}
-                            handleDrawer={this.showDrawer}
                         />
                     }
 
@@ -110,19 +101,9 @@ class HeroDetails extends React.Component {
                         <HeroEvents
                             title="Stories"
                             comics={this.state.results.stories}
-                            handleDrawer={this.showDrawer}
                         />
                     }
                 </div>
-
-                { this.state.eventDetailsEndpoint && 
-                
-                    <EventDetails 
-                        closeDrawer={this.closeDrawer} 
-                        visible={this.state.showDrawer}
-                        endpoint={this.state.eventDetailsEndpoint}    
-                        />
-                }
             </div>
         )
     }

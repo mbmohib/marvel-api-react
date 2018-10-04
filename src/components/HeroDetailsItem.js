@@ -74,7 +74,7 @@ const HeroDetailsItem = props =>  (
                 title={{ width: '50px' }}
             >
                 <Button 
-                    onClick={() => props.handleDrawer(props.event.url)} 
+                    onClick={() => props.handleDrawer(props.event.id)} 
                     type="dashed"
                 >
                     See Details
