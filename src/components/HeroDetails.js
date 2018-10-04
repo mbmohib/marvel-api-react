@@ -7,13 +7,18 @@ import { addHttps } from '../util/util';
 import EventDetails from './EventDetails';
 
 class HeroDetails extends React.Component {
+    
+    // Default State
+    defaultState = {
+        results: null,
+        error: null,
+        showDrawer: false,
+        eventDetailsEndpoint: null
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            results: undefined,
-            showDrawer: false,
-            eventDetailsEndpoint: undefined
-        }
+        this.state = this.defaultState;
         this.closeDrawer = this.closeDrawer.bind(this);
         this.showDrawer = this.showDrawer.bind(this);
     }
@@ -21,11 +26,7 @@ class HeroDetails extends React.Component {
     componentDidUpdate(prevProps) {
         // Clear all data and re-fetch if id changed
         if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.setState(() => {
-                return {
-                    results: undefined,
-                }
-            })
+            this.setState({ ...this.defaultState });
             this.getData();
         }
     }
@@ -114,12 +115,14 @@ class HeroDetails extends React.Component {
                     }
                 </div>
 
+                { this.state.eventDetailsEndpoint && 
                 
-                <EventDetails 
-                    closeDrawer={this.closeDrawer} 
-                    visible={this.state.showDrawer}
-                    endpoint={this.state.eventDetailsEndpoint}    
-                    />
+                    <EventDetails 
+                        closeDrawer={this.closeDrawer} 
+                        visible={this.state.showDrawer}
+                        endpoint={this.state.eventDetailsEndpoint}    
+                        />
+                }
             </div>
         )
     }

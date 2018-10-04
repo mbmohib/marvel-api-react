@@ -24,18 +24,19 @@ const EventsInfo = styled.div`
 `;
 
 class EventDetails extends React.Component {
+    defaultState = {
+        event: undefined,
+        eventSpecification: undefined,
+        drawer: true
+    }
     constructor(props) {
         super(props);
-
-        this.state = {
-            event: undefined,
-            eventSpecification: undefined,
-            drawer: true
-        }
+        this.state = this.defaultState;
     }
 
     componentDidUpdate(prevProps) {
         if(prevProps.endpoint !== this.props.endpoint) {
+            this.setState({ ...this.defaultState })
             this.getData();
         }
     }
@@ -66,6 +67,10 @@ class EventDetails extends React.Component {
                 ]
             }
         })
+    }
+
+    parseID(str) {
+        return str.match(/\d{3,}/).join('');
     }
 
     render() {
@@ -114,7 +119,8 @@ class EventDetails extends React.Component {
                             <List.Item.Meta
                                 title={item.name}
                             />
-                            <Link to={`/hero/${this.state.event && parseInt(item.resourceURI.match(/\d{3,}/).join(''))}`}>
+                            <Link to={`/hero/${
+                                    this.state.event && this.parseID(item.resourceURI)}`}>
                                 <Button 
                                     type="primary"
                                     onClick={this.props.closeDrawer}

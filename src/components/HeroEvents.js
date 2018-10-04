@@ -12,13 +12,15 @@ const LoadMore = styled(Button)`
 `;
 
 class HeroEvents extends React.Component {
+    defaultState = {
+        eventDetails: [],
+        loading: true,
+        offset: 0,
+    };
+
     constructor(props) {
         super(props);
-        this.state = {
-            eventDetails: [],
-            loading: true,
-            offset: 0,
-        }
+        this.state = this.defaultState;
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
@@ -31,19 +33,13 @@ class HeroEvents extends React.Component {
     componentDidUpdate(prevProps) {
         // Set initial state when collection URI changed
         if(prevProps.comics.collectionURI !== this.props.comics.collectionURI) {
-            this.setState(() => {
-                return {
-                    eventDetails: [],
-                    loading: true,
-                    offset: 0,
-                }
-            }, () => {
-                // Create placeholder loading effect while data being fetched
+            this.setState({ ...this.defaultState }, () => {
                 this.createPlaceholderData(this.props.comics.available, this.state.eventDetails.length);
                 this.getData();
             })
         };
     }
+
 
     createPlaceholderData(totalAvailable, offset) {
         let count;
